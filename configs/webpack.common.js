@@ -8,6 +8,7 @@ const StyleLintPlugin = require("stylelint-webpack-plugin");
 const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
   .BundleAnalyzerPlugin;
 const ScriptExtHtmlWebpackPlugin = require("script-ext-html-webpack-plugin");
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 const config = require("./config");
 
@@ -62,21 +63,23 @@ module.exports = {
       {
         test: /\.css$/,
         exclude: [/\.module\.s?css$/],
-        use: [
-          { loader: "style-loader" },
-          {
-            loader: "css-loader",
-            options: {
-              importLoaders: 1,
-              modules: false,
-              context: "/",
+        use: ExtractTextPlugin.extract({
+          fallback: "style-loader",
+          use: [
+            {
+              loader: "css-loader",
+              options: {
+                importLoaders: 1,
+                modules: false,
+                context: "/",
+              },
             },
-          },
-          {
-            loader: "sass-loader",
-            options: sassOptions,
-          },
-        ],
+            {
+              loader: "sass-loader",
+              options: sassOptions,
+            },
+          ],
+        }),
       },
       {
         test: /\.module\.s?css$/,
@@ -141,6 +144,7 @@ module.exports = {
       ReactDOM: "react-dom",
       Promise: "bluebird",
     }),
+    new ExtractTextPlugin("styles.css"),
     ...extraPlugins,
   ],
 };
