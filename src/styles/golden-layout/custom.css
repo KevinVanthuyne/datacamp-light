@@ -10,5 +10,6 @@
 }
 
 [data-datacamp-exercise] {
-  display: none;
+  visibility: hidden;
+  /* display: none; */
 }
