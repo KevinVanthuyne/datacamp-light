@@ -8,3 +8,7 @@
 .lm_header {
   overflow: hidden !important;
 }
+
+[data-datacamp-exercise] {
+  display: none;
+}
